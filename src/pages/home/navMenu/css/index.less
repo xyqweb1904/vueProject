@@ -1,0 +1,23 @@
+.pages_div {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+
+  .content_div {
+    // border: 1px solid #999;
+    border-radius: 8px;
+
+    .catalogue {
+      width: 200px;
+      overflow: hidden;
+      overflow-x: scroll;
+      border-right: solid 1px #e6e6e6;
+      max-height: 100vh;
+      overflow: scroll;
+      position: fixed;
+      box-shadow: #999 1px 1px 1px;
+      /deep/ .el-menu {
+        border: none
+      }
+    }
+  }
+}

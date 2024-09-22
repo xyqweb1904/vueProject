@@ -1,0 +1,21 @@
+{
+    "data": {
+        "flag": "1",
+        "token": "ajkfjhfashfhasoioasdasasddasioddoisdkjfhhf",
+        "userList": [
+            {
+                "userName": "小明",
+                "passWord": 123456
+            },
+            {
+                "userName": "小红",
+                "passWord": 123456
+            },
+            {
+                "userName": "小丽",
+                "passWord": 123456
+            }
+        ],
+        "msg": "操作成功"
+    }
+}
