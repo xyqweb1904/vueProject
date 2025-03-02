@@ -228,6 +228,26 @@ export default {
                   navRouter: '/vueApiAll'
                 }
               ]
+            },
+            {
+              navId: '2-1',
+              navName: '小dome',
+              navRouter: '/dome',
+              icon: 'el-icon-reading',
+              children: [
+                {
+                  navId: '1-2-1',
+                  navName: '下载、excel',
+                  navRouter: '/UpLoad',
+                  icon: 'el-icon-document'
+                },
+                {
+                  navId: '1-2-2',
+                  navName: '语音搜索',
+                  navRouter: '/VoiceSearch',
+                  icon: 'el-icon-document'
+                }
+              ]
             }
           ]
         }

@@ -19,11 +19,12 @@
                 只能放在static文件夹中
                 <iframe src="./sonDom.html" height="400" width="600"></iframe>
             -->
-            <iframe id="iframe" ref="iframedom" src="../../../static/Iframe/sonDom.html" height="200" width="600"></iframe>
+            <!-- ../../../static/Iframe/sonDom.html -->
+            <iframe id="iframe" ref="iframedom" src="./sonDom.html" height="200" width="600"></iframe>
             <div>
                 <h4>功能区</h4>
                 <ul class="iframe_ui">
-                    <li v-for="item in buttonList">
+                    <li v-for="item in buttonList" :key="item.key">
                         <span>第{{item.key}}项</span>
                         <el-button type="primary" @click="getList(item)">{{item.value}}</el-button>
                         <el-button type="primary" @click="inserTo(item)"> 插入</el-button>
@@ -56,30 +57,40 @@ export default {
     mounted() {
         document.domain = 'localhost' // 解决跨域
         let iframedom = this.$refs.iframedom
-        // 通过绑定事件触发子组件的blue事件来获取光标信息
-        iframedom.addEventListener('load',() => {
-            let _document = iframe.contentDocument
-            let textAreadom = _document.querySelector('textarea')
-            textAreadom.addEventListener('blur', (e) => {
-                this.selectionStart = e.target.selectionStart
+        console.log("iframedom=>", iframedom);
+        console.log("iframe=>", iframe);
+        iframe.onload = () => {
+            // debugger
+            // 通过绑定事件触发子组件的blue事件来获取光标信息
+            // debugger
+            iframedom.contentDocument.addEventListener('load',() => {
+                let iframe = document.getElementById('iframe')
+                console.log("iframe===111====>", iframe)
+                let _document = iframe.contentDocument
+                console.log("_document=======>", _document)
+                let textAreadom = _document.querySelector('textarea')
+                console.log("textAreadom======>", textAreadom)
+                textAreadom.addEventListener('blur', (e) => {
+                    this.selectionStart = e.target.selectionStart
+                })
+                let _window = iframe.contentWindow
+                let button2 = _document.getElementById('buttonId2');
+                button2.addEventListener('click', (e) => {
+                    // console.log('123123', e);
+                    _window.parent.postMessage({ type: 'sonDom2', value: textAreadom.value })
+                    // 获取textarea的值
+                    console.log("textAreadom:", textAreadom.value)
+                    this.iframeValue2 = textAreadom.value
+                })
             })
-            let _window = iframe.contentWindow
-            let button2 = _document.getElementById('buttonId2');
-            button2.addEventListener('click', (e) => {
-                // console.log('123123', e);
-                _window.parent.postMessage({ type: 'sonDom2', value: textAreadom.value })
-                // 获取textarea的值
-                console.log("textAreadom:", textAreadom.value)
-                this.iframeValue2 = textAreadom.value
+            // 方式1：通过在父组件中监听message事件来获取传入的值
+            window.addEventListener("message", (e) => {
+                // console.log("e==>", e)
+                if (e.data.type == 'sonDom1') {
+                    this.iframeValue = e.data.value
+                }
             })
-        })
-        // 方式1：通过在父组件中监听message事件来获取传入的值
-        window.addEventListener("message", (e) => {
-            // console.log("e==>", e)
-            if (e.data.type == 'sonDom1') {
-                this.iframeValue = e.data.value
-            }
-        })
+        }
     },
     methods: {
         inserTo(item) {

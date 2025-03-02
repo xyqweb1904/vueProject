@@ -29,9 +29,12 @@ import pages2 from '../pages/keepAlivePage/components/pages2.vue'
 import elementDome from '../pages/elementDome/index.vue'
 import iFramdom from '../pages/iFramdom/iFramdomIndex.vue'
 import vueApiAll from '../pages/VUE_API/index.vue'
+import voiceSearch from '../pages/voiceSearch/voiceSearch.vue'
 // import iframsom1 from '../pages/iFramdom/sonDom.html'
 // import thisWindow from '../../static/thisWindow.html'
 // import pointToThe from '../../static/pointToThe.html'
+
+import UpLoad from '../pages/UpLoad/index.vue'
 
 
 const obj = {
@@ -66,6 +69,8 @@ const obj = {
   elementDome,
   iFramdom,
   vueApiAll,
+  UpLoad,
+  voiceSearch
 }
 
 export default obj

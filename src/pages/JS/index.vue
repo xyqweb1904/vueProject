@@ -111,7 +111,11 @@
           </el-dialog>
         </div>
         <div>
-          <button @click="JSProp">JS弹窗</button>
+          <div>
+            弹窗内容
+            <textarea></textarea>
+          </div>
+          <el-button @click="JSProp">JS弹窗</el-button>
         </div>
     </div>
 </template>
@@ -300,8 +304,8 @@ export default {
       var M = function(name) {
         this.name = name
       }
-      var Obj = new M('o3')
-      console.log('obj:', obj)
+      let obj = new M('哈哈哈')
+      console.log("obj===>", obj)
     },
     argumentsTestFun() {
       argumentsTest.giveParameter()

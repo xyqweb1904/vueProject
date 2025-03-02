@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>somDom</title>
+</head>
+
+<body>
+    <textarea id="textarea" name="" id="" style="height: 120px;min-width: 350px"></textarea>
+    <button id="buttonId1">方式一上传2</button>
+    <button id="buttonId2">方式二上传</button>
+</body>
+<script>
+    // 子组件通过监听message事件，可以获取父组件的数据
+    /*
+        addEventListener方法用于向指定元素添加监听事件。且同一元素目标可重复添加;
+        不会覆盖之前相同事件;配合removeEventListener()方法来移除事件
+    */
+    let selectionStart = 0 // 记录光标位置信息
+    window.addEventListener('message', e => {
+        console.log("e.data:", e.data);
+        console.log("textarea.value1:", textarea.value);
+        let formerData = textarea.value;
+        if (formerData) {
+            // 获取光标位置   然后拼接新旧数据
+            textarea.value = formerData.slice(0, selectionStart) + e.data.value + formerData.slice(selectionStart, formerData.length)
+        } else {
+            textarea.value = e.data.value
+        }
+        console.log("textarea.value2:", textarea.value);
+    })
+    // 失焦时，记录光标位置信息
+    textarea.onblur = () => {
+        console.log("textarea.selectionStart:", textarea.selectionStart);
+        // 获取光标位置
+        selectionStart = textarea.selectionStart;
+    }
+
+    // 方式1：子传父
+    // 方式一有局限性：因为需要在服务中操作postMessage事件，在实际开发中，我们一般不能操作第三方提供的微服务
+    buttonId1.onclick = () => {
+        window.parent.postMessage({ type: 'sonDom1', value: textarea.value })
+    }
+    // 方式二：子传父：开发中，一般第三方微服务都解决了这个跨域问题
+    document.domain = 'localhost' // 解决跨域问题
+</script>
+
+</html>

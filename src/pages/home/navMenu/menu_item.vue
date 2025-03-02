@@ -19,15 +19,15 @@
 </template>
 <script>
 export default {
-  name: "mentItem",
-  data() {
-    return {};
-  },
-  props: {
-    MenuData: {
-      type: Array
+    name: "mentItem",
+    data() {
+        return {};
+    },
+    props: {
+        MenuData: {
+            type: Array
+            }
     }
-  }
 };
 </script>
 <style lang="less" scoped>

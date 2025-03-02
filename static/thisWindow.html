@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+    <button onclick="goBack()">返回</button>
+    <span class="title">this指向一</span>
+    <button onclick="thisWindow()">默认指向window</button>
+    <button onclick="thisWindow2()">默认指向window--延伸版</button>
+    <br />
+    <span class="title">this指向二</span>
+    <button onclick="thisWindowFun(1)">谁调用指向谁</button>
+    <span class="span-style1">【所有可以得出：this为谁调用就指向谁，如果有多级调用，那么他指向调用他的上一级】</span>
+    <br />
+    <span class="title">this指向三</span>
+    <button onclick="thisWindowFun(2)">构造函数版this</button>
+    <!-- <span class="span-style1">【所有可以得出：this为谁调用就指向谁，如果有多级调用，那么他指向调用他的上一级】</span> -->
+  </div>
+</body>
+<script>
+  function thisWindowFun(type) {
+    // 案例一，谁调用指向谁
+    if (type == '1') {
+      let obj = {
+        a: 1,
+        b: function () {
+          console.log('指向调用的对象', this.a);
+        }
+      }
+      obj.b();
+
+      // 把上面的转换一下：
+      let obj2 = {
+        a: 1,
+        b: {
+          c: function () {
+            console.log('因为上一级是b在调用，所有this指向b', this.a);
+          }
+        }
+      }
+      obj2.b.c() // undefined
+      // 在转换一下
+      let obj3 = {
+        a: 1,
+        b: function () {
+          console.log('因为d是在window下，所有this指向window', this.a);
+        }
+      }
+      let d = obj3.b;
+      d(); //  undefined
+    }
+    // 构造函数版this：
+    if (type == '2') {
+      function Fn() {
+        this.user = "追梦子";
+      }
+      var a = new Fn();
+      console.log('', a.user); //追梦子
+    }
+  }
+
+  function thisWindow() {
+    console.log(this)
+  }
+
+  /*
+  函数thisWindow22在一个外部函数thisWindow2里面声明且调用，那么它的this是指向谁呢？ 仍然是window
+  许多人可能会顾虑于thisWindow2函数的作用域对thisWindow22的影响，但我们只要抓住我们的理论武器——没有明确的调用对象的时候，将对函数的this使用默认绑定：绑定到全局的window对象，便可得正确的答案了 
+  下面这个加强版的例子也是同样的输出true
+  */
+  function thisWindow2() {
+    function thisWindow22() {
+      console.log(this)
+    }
+    thisWindow22(); // 独立函数调用
+  }
+  function goBack() {
+    console.log("dsjfgdjkfgjksfjk");
+    location.href = 'http://localhost:8080/#/'
+  }
+</script>
+<style>
+  .title {
+    padding: 8px 10px;
+    display: inline-block;
+    /* border: 1px solid #696969; */
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+    background-color: #1752ff;
+    color: #fff;
+    box-shadow: 2px 2px 1px #ae8c8c;
+  }
+
+  .span-style1 {
+    /* box-shadow: 1px 1px 1px #999; */
+    border: 1px solid #909090;
+    border-radius: 8px;
+    padding: 5px;
+    color: #f00;
+  }
+</style>
+
+</html>

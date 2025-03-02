@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>this</title>
+</head>
+<link rel="stylesheet" href="./css/public.css">
+
+<body class="font-14">
+    <div>
+        <span class="title_medium disp_inblock">1.全局环境下的this指向:</span>在全局作用域下，this始终指向全局对象window，无论是否是严格模式！
+    </div>
+    <div>
+        <span class="title_medium disp_inblock">2.函数内的this:</span> 普通函数内的this分为两种情况，严格模式下和非严格模式下
+        <br/>
+        <div class="padding-left-12">
+            <span class="title_medium disp_inblock">严格模式下</span>: undefined
+        </div>
+        <div class="padding-left-12">
+            <span class="title_medium disp_inblock">非严格模式下</span>: 指向window
+        </div>
+    </div>
+    <div>
+        <span class="title_medium disp_inblock">3.对象中的this:</span>对象内部方法的this指向调用这些方法的对象，也就是谁调用就指向谁。
+    </div>
+    <div>
+        <span class="title_medium disp_inblock">4.箭头函数中的this:</span>this指向于函数作用域所用的对象。
+    </div>
+    <div>
+        <span class="title_medium disp_inblock">5.构造函数中的this:</span>构造函数中的this是指向实例。
+    </div>
+    <div>
+        <span class="title_medium disp_inblock">6.原型链中的this：</span>this这个值在一个继承机制中，仍然是指向它原本属于的对象，而不是从原型链上找到它时，它所属于的对象。
+    </div>
+    <div>
+        <span class="title_medium disp_inblock">7.改变this指向的方法 --- call()：</span>call（a, b, c）方法接收三个参数，第一个是this指向，第二个，三个是传递给函数的实参，可以是数字，字符串，数组等类型的数据类型都可以。
+    </div>
+    <div>
+        一、call,apply,bind的相同点：
+        <div class="padding-left-12">
+            都是改变this指向的；
+            <br/> 第一个参数都是this要指向的对象；
+            <br/> 都可以利用后续参数传参；
+        </div>
+        <br/> 二、call,apply,bind的区别：
+        <div class="padding-left-12">
+            call和bind的参数是依次传参，一一对应的；
+            <br/> 但apply只有两个参数，第二个参数为数组；
+            <br/> call和apply都是对函数进行直接调用，而bind方法返回的仍是一个函数；
+        </div>
+    </div>
+</body>
+<script>
+    // "use strict";
+    console.log("全局this：", this);
+</script>
+<script>
+    function test() {
+        "use strict" // 严格模式 undefind
+        console.log('-------------------华丽分割线-------------------');
+        console.log("严格模式下this：", this)
+    }
+    function test2() { // window
+        console.log("普通模式下this：", this)
+    }
+    test();
+    test2();
+</script>
+<script>
+    let obj = {
+        name: '奋斗',
+        skill: function () {
+            console.log('-------------------华丽分割线-------------------');
+            console.log('对象中的this:', this.name)
+        },
+        obj2: {
+            name: '努力',
+            skill2() {
+                console.log("二级对象下的this：", this.name)
+            }
+        }
+    }
+    obj.skill()
+    obj.obj2.skill2()
+</script>
+<script>
+    /*
+        1.箭头函数的重要特征：箭头函数中没有this和arguments，是真的没有！
+        2.箭头函数没有自己的this指向，它会捕获自己定义所处的外层执行环境，并且继承这个this值,指向当前定义时所在的对象。
+          箭头函数的this指向在被定义的时候就确定了，之后永远都不会改变。
+          即使使用call()、apply()、bind()等方法改变this指向也不可以。
+        3.声明的是全局变量obj_two，this指向箭头函数所在全局作用域的对象，即indow对象
+    */
+    let obj_two = {
+        name: '奋斗',
+        Fun: () => {
+            console.log('-------------------华丽分割线-------------------');
+            console.log('箭头函数的this：', this)
+        }
+    }
+    obj_two.Fun()
+
+    /*
+        1.由于show函数是箭头函数，所以自身不能绑定this，因此找它的上一级作用域。
+          如果父级作用域还是箭头函数，就再往上找，一层一层的直到直到this的指向。
+        2.window.show()返回值是window，所以this此时指向window；
+        3.window.obj.show(),obj是对象，非箭头函数，所以找到这里就停止了，this绑定到obj上。
+          window调用obj，所以obj中的this也指向window。
+    */
+    let show = () => {
+        console.log('箭头函数this：', this)
+    }
+    let obj_show = {
+        show
+    }
+    obj_show.show()
+</script>
+<script>
+    function Person(name, age, sex) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        console.log('-------------------华丽分割线-------------------');
+        console.log('构造函数中的this:', this)
+    }
+    let p = new Person('小强', 25, 'boy');
+
+</script>
+<script>
+    console.log('-------------------华丽分割线-------------------');
+    function Fun1(n1, n2) {
+        console.log("this:", this);
+        console.log("n1, n2:", n1, n2);
+    }
+    Fun1.call()
+    let obj_fun1 = { n1: '2', n2: '3' }
+    Fun1.call(obj_fun1);
+    Fun1.call(1, 2);
+    Fun1.call(obj_fun1, 1, 2)
+</script>
+<script>
+    console.log('-------------------华丽分割线-------------------');
+    var a = {
+        name: '一一',
+        age: '22',
+        sex: '女',
+        hobby: '写代码',
+        say: function (sex, hobby) {
+            console.log(this.name, this.age, sex, hobby)
+        }
+    }
+    var b = {
+        name: '二二',
+        age: '23',
+    }
+
+    a.say.call(b, '男', '学习'); // 二二 23 男 学习
+    a.say.apply(b, ['男', '学习']); //  二二 23 男 学习
+    // bind可以向cally一样传参：
+    a.say.bind(b, '男', '学习')();//  二二 23 男 学习
+    a.say.bind(b)('男', '学习');//  二二 23 男 学习
+    a.say.bind(b)() //  二二 23 undefined undefined 
+</script>
+
+</html>

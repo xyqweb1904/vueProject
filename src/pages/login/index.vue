@@ -71,7 +71,7 @@ export default {
     },
     computeTime() {
       this.time = setInterval(() => {
-        this.goTime = this.goTime - 1
+        this.goTime = this.goTime - 1 || 0
         console.log('this.goTime:', this.goTime)
         if (this.goTime <= 0) {
           clearInterval(this.time)

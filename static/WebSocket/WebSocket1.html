@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WebSocket1</title>
+</head>
+<link rel="stylesheet" href="../css/public.css">
+<link rel="stylesheet" href="./css/websocket.css">
+<!-- <script src="./js/socket.io.js"></script> -->
+
+<body>
+    <div class="padding-left-12 pages">
+        <div class="pages-area">
+            <div class="title">
+                WebSocket1
+            </div>
+            <div class="communication">
+                <div class="linkman">
+                    <div class="linkman-item">WebSocket2</div>
+                </div>
+                <div class="chitchat">
+                    <div class="chitchat-record">
+                        <div class="chitchat-record-he">别个
+                            <div id="msg"></div>
+                        </div>
+                        <div class="chitchat-record-me">
+                            自己
+                            <div id="myRecord"></div>
+                        </div>
+                    </div>
+                    <div class="chitchat-edit">
+                        <input type="text" id="sendTxt" class="edit-input" />
+                        <button class="edit-button" id="sand">发送</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var clientSocket = io("ws://192.168.204.130:12312");
+    // 获取缓存
+    var mySentence = localStorage.getItem('mySentence') || [];
+    var youSentence = localStorage.getItem('youSentence') || [];
+
+    let mySentenceArr = []
+    let youSentenceArr = []
+    // 获取区域
+    var sand = document.getElementById("sand")
+    var myRecord = document.getElementById('myRecord');
+    // clientSocket.emit("message", "hello")
+    var div = document.createElement("div")
+    clientSocket.on("connections", (data) => {
+        console.log("data:", data);
+    })
+    // 接受WebSocket2页面的数据
+    clientSocket.on("list", data => {
+        console.log("list-data:", data);
+        window.localStorage.setItem('youSentence', youSentence)
+
+        updataDom()
+        // youSentence.map(item => {
+        //     itemDom += `<span>${item}</span> <br/>`
+        // })
+        // div.innerHTML = itemDom;
+        // var msg = document.getElementById("msg")
+        // msg.appendChild(div)
+    })
+
+
+    var div = document.createElement('div');
+    // 发送
+    sand.onclick = function () {
+        var txt = document.getElementById('sendTxt').value.toString();
+        window.localStorage.setItem('mySentence', mySentence)
+        updataDom()
+    }
+    function updataDom() {
+        var div1 = document.createElement('div');
+        var div2 = document.createElement('div');
+        var txt = document.getElementById('sendTxt').value.toString();
+
+        // 获取缓存 
+        var mySentence = localStorage.getItem('mySentence') || '';
+        var youSentence = localStorage.getItem('youSentence') || '';
+
+        mySentence.indexOf(',') > 0 ? mySentenceArr = mySentence.split(',') : mySentenceArr.push(mySentence)
+        youSentence.indexOf(',') > 0 ? youSentenceArr = youSentence.split(',') : youSentenceArr.push(youSentence)
+
+        mySentenceArr.push(txt)
+        let itemDom = ''
+        youSentenceArr.map(item => {
+            itemDom += `<span>${item}</span> <br/>`
+        })
+        div1.innerHTML = itemDom;
+        var msg = document.getElementById("msg")
+        msg.appendChild(div1)
+
+        var spanSum = ''
+        mySentenceArr.map(item => {
+            spanSum += `<span>${item}</span><br/>`
+        })
+        div2.innerHTML = spanSum
+        myRecord.appendChild(div2)
+        clientSocket.emit("message", txt);
+    }
+</script>
+<style lang="less">
+</style>
+
+</html>

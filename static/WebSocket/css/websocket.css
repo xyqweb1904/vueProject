@@ -1,0 +1,59 @@
+.pages {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+}
+.pages-area .title {
+    /* text-align: center */
+}
+.communication {
+    /* background: #233 */
+    border: 1px solid #999999;
+    border-radius: 8px;
+    display: flex;
+    min-height: 300px;
+    align-items: top;
+}
+.linkman {
+    min-width: 100px;
+    display: inline-block;
+    text-align: center;
+    border-right: 1px solid #999999;
+    border-bottom: 1px solid #999999;
+}
+.linkman-item {
+    padding: 5px 12px;
+    border-bottom: 1px solid #999999;
+}
+.chitchat {
+    min-width: 300px;
+    display: inline-block;
+}
+.chitchat-record {
+    height: calc(100% - 110px);
+    display: flex;
+    padding: 4px 12px;
+}
+.chitchat-edit {
+    height: 100px;
+    border-top: 1px solid #999999;
+    position: relative;
+}
+.edit-input {
+    position: absolute;
+    border: none;
+    height: calc(100% - 40px);
+    width: calc(100% - 5px);
+}
+.edit-button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+.chitchat-record-he {
+    width: 50%
+}
+.chitchat-record-me {
+    width: 50%;
+}

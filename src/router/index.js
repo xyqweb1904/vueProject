@@ -139,7 +139,18 @@ export default new Router({
           name: 'vueApiAll',
           component: obj.vueApiAll
         },
-      ]
+        {
+          path: '/UpLoad',
+          name: 'UpLoad',
+          component: obj.UpLoad
+        },
+        {
+          path: '/voiceSearch',
+          name: 'voiceSearch',
+          component: obj.voiceSearch
+        },
+      ],
+
     }
   ]
 })

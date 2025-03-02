@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WebSocket1</title>
+</head>
+<!-- <script src="./js/socket.io.js"></script> -->
+
+<body>
+    <div class="padding-left-12 pages">
+        <div class="pages-area">
+            <div class="title">
+                WebSocket1
+                <div id="msg"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var clientSocket = io("ws://192.168.203.204:12312");
+    clientSocket.emit("message", "hello")
+    var div = document.createElement("div")
+    clientSocket.on("connections", (data) => {
+        console.log("data:", data);
+    })
+    clientSocket.on("list", data => {
+        console.log("list-data:", data);
+        div.innerHTML = data;
+        var msg = document.getElementById("msg")
+        msg.appendChild(div)
+    })
+</script>
+<style lang="less">
+</style>
+
+</html>

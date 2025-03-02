@@ -20,6 +20,16 @@
                             <div class="item-public item-linehit"><span>position方式实现居中展示</span></div>
                         </div>
                     </li>
+                    <li>
+                        <div class="container-public-style container-linehit f1">
+                            <div class="item-public z1"><span>absolute + calc(需要知道子元素宽高)</span></div>
+                        </div>
+                    </li> 
+                    <li>
+                        <div class="container-public-style container-linehit f2">
+                            <div class="item-public z2"><span>利用行内元素居中属性lineheight</span></div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -58,8 +68,15 @@
             </div>
           </div>
         </div>
+        <div>
+          <el-input type="color"></el-input>
+        </div>
+        <div>
+            <!-- https://gitee.com/aring1998/vue-marquee -->
+        </div>
     </div>
 </template>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap/3.8.0/gsap.min.js"></script>
 <script>
 import arrTakeoutObj from "./js/arrTakeoutJs.js";
 import { mapState, mapGetters, mapMutations } from "vuex";
@@ -85,6 +102,9 @@ export default {
     console.log("vuex:", this.$store.state.name);
     // console.log("vuex2:", ...mapGetters([name]));
     console.log("vuex:", this.$store.getters.getMessage);
+    // var color = tinycolor("#f00");
+    // console.log("color===========>", color);
+    
   },
   computed: {
     ...mapGetters([name])

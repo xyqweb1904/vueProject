@@ -14,6 +14,7 @@ import PagesTitle from './components/pagesTitle'
 // import store from './store/vuex'
 import store from './pages/vuexPages/store'
 import ajax from "./common/ajax"
+import VueSpeech from 'vue-speech'
 // 导入ant-design-vue组件
 // import Antd from '../node_modules/ant-design-vue'
 // 导入组件的样式表
@@ -26,10 +27,12 @@ import './permssion'
 // 全局引用
 Vue.use(ElementUI)
 Vue.use(Dialog)
+Vue.use(VueSpeech)
 // Vue.use(Antd)
 
 // 注册全局组件
 Vue.component('PagesTitle', PagesTitle)
+// Vue.component('VueSpeech', VueSpeech)
 
 // 挂载Vue原型对象上
 Vue.prototype.$UI = UI;

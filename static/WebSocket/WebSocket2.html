@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WebSocket2</title>
+</head>
+<link rel="stylesheet" href="../css/public.css">
+<link rel="stylesheet" href="./css/websocket.css">
+<!-- <script src="./js/socket.io.js"></script> -->
+
+<body>
+    <h3>WebSocket2</h3>
+    <input type="text" id="sendTxt" />
+    <button id="sendBtn">发送</button>
+    <div id="msg"></div>
+    <button>下线</button>
+</body>
+<script>
+    var clientSocket = io("ws://192.168.1.7:8080");
+    clientSocket.on("enter", data => {
+        var div = document.createElement("div");
+        div.innerHTML = data;
+        var msg = document.getElementById("msg");
+        msg.appendChild(div)
+    })
+    //3:客户聊一句话发送服务器
+    //3.1:获取发送按钮和输入框
+    var btn = document.getElementById("sendBtn");
+    var txt = document.getElementById("sendTxt");
+    //3.2:为按钮绑定点击事件
+    btn.onclick = function () {
+        //3.3:向服务器发送一条消息
+        clientSocket.emit("message2", txt.value);
+    }
+</script>
+
+</html>
