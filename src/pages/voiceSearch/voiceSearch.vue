@@ -34,11 +34,11 @@
 </template>
 <script>
 import VueSpeech from 'vue-speech'
-import ly from './index'
+// import ly from './index'
 export default {
-    components: {
-        ly
-    },
+    // components: {
+    //     ly
+    // },
     data() {
         return {
             // recognition: null,
