@@ -2,9 +2,11 @@
     <div class="pages_div">
         <div v-for="item in MenuData" :key="item.navRouter">
             <el-submenu :index="item.navRouter" v-if="item.children">
-                <template class="i-public-style" :index="item.navId" slot="title">
-                    <i :class="item.icon"></i>
-                    <span>{{item.navName}}</span>
+                <template slot="title">
+                    <div class="i-public-style" :index="item.navId" >
+                        <i :class="item.icon"></i>
+                        <span>{{item.navName}}</span>
+                    </div>
                 </template>
                 <el-menu-item-group>
                     <mentItem :MenuData="item.children"/>

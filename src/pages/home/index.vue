@@ -246,6 +246,12 @@ export default {
                   navName: '语音搜索',
                   navRouter: '/VoiceSearch',
                   icon: 'el-icon-document'
+                },
+                {
+                  navId: '1-2-3',
+                  navName: '实时高亮搜索',
+                  navRouter: '/RealTimeSearch',
+                  icon: 'el-icon-document'
                 }
               ]
             }

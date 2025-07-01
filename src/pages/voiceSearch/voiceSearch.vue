@@ -83,11 +83,8 @@ export default {
         pageInfo() {
             console.log('pageInfo');
             if ('webkitSpeechRecognition' in window) {
-                console.log("webkitSpeechRecognition====================>");
                 this.recognition = new webkitSpeechRecognition(); // 对于非Chrome浏览器使用webkit前缀的API
             } else if ('SpeechRecognition' in window) {
-                console.log("SpeechRecognition====================>");
-                
                 this.recognition = new SpeechRecognition(); // 标准API
             } else {
                 alert('浏览器不支持语音识别');
@@ -97,23 +94,17 @@ export default {
             this.recognition.interimResults = true; // 是否返回临时结果（部分识别结果）
             this.recognition.lang = 'cmn-Hans-CN'; // 普通话（中国大陆）
             // this.recognition.lang = 'zh-CN'; // 设置语言为中文
-            debugger
-            this.recognition.onresult = (event) => {
-                console.log("event================>", event);
-                
+            this.recognition.onresult = (event) => {                
                 const transcript = Array.from(event.results)
                 .map(result => result[0]) // 获取每个结果的第一个片段（通常是最终的片段）
                 .map(result => result.transcript) // 获取文本片段的文本内容
                 .join('\n'); // 将结果连接成字符串
                 this.recognizedText = transcript; // 更新数据模型中的文本
-                console.log("this.recognizedText==============>", this.recognizedText); 
             };
             this.recognition.onend = () => {
-                console.log("this.recognizedText==============>", this.recognizedText); 
                 console.log('语音识别结束');
                 this.recognition = null; // 重置recognition对象，以便下次使用
             };
-            console.log("this.recognition=============>", this.recognition);
             this.recognition.start(); // 开始语音识别
         },
         speak() {
@@ -147,29 +138,24 @@ export default {
             try {
                 // 请求麦克风权限
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                
                 // 初始化录音器
                 this.mediaRecorder = new MediaRecorder(stream);
-
                 // 收集录音数据
                 this.mediaRecorder.ondataavailable = (event) => {
                     if (event.data.size > 0) {
                         this.audioChunks.push(event.data);
                     }
                 };
-
                 // 录音停止后的处理
                 this.mediaRecorder.onstop = async () => {
                     await this.sendAudioToServer();
                     stream.getTracks().forEach(track => track.stop()); // 关闭麦克风
                 };
-
                 this.mediaRecorder.start();
                 this.isRecording = true;
 
             } catch (error) {
                 console.error('录音失败:', error);
-                debugger
                 if (error.name === 'NotAllowedError') {
                     this.errorMessage = '麦克风权限被拒绝，请允许访问！';
                 } else {

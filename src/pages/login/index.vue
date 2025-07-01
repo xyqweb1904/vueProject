@@ -83,7 +83,7 @@ export default {
     nextPages() {
       this.time ? clearInterval(this.time) : ''
       this.$router.push({
-        path: 'JS'
+        path: '/JS'
       })
     }
   }

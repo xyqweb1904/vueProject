@@ -149,6 +149,11 @@ export default new Router({
           name: 'voiceSearch',
           component: obj.voiceSearch
         },
+        {
+          path: '/RealTimeSearch',
+          name: 'RealTimeSearch',
+          component: obj.RealTimeSearch
+        },
       ],
 
     }
